@@ -1,0 +1,6 @@
+@import 'estilos.css';
+/*importa el estilo de estilos.css*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+

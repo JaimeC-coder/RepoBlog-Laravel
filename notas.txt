@@ -1,0 +1,58 @@
+para el uso de imagenes como se tienen que agregar en un determinado lugar que no es en la carpeta public y como se sabe los archivos todo lo que se puede acceder esta en la carpeta public se tiene que pequeña modificacion en el archivo filesystems y para ello se tiene que hacer :
+
+ config/filesystems.php
+ y dentro de ela nos dirigimos a la linea  16
+ donde deveria de estar
+     'default' => env('FILESYSTEM_DISK', 'local'),
+     y se tiene que cambiar por
+        'default' => env('FILESYSTEM_DISK', 'public'),
+
+--------------------------------------------------------------------------------
+si se tiene problemas con lo que es Storage que no aparece en la carpeta public se tiene que hacer :
+php artisan storage:link
+
+
+
+y luego de ello las migraciones con los siders se van a realizar de forma correcta
+
+si eso no lo soluciona
+te vas a la carpeta verdor/fakerphp/faker/providers/Image.php
+
+y buscas la linea de
+   if (function_exists('curl_exec')) {
+            // use cURL
+            $fp = fopen($filepath, 'w');
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_FILE, $fp); //línea existente
+            // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); //nueva línea
+            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //nueva línea
+
+            $success = curl_exec($ch) && curl_getinfo($ch, CURLINFO_HTTP_CODE) === 200;
+            fclose($fp);
+            curl_close($ch);
+
+            if (!$success) {
+             //  unlink($filepath);
+
+                // could not contact the distant URL or HTTP error - fail silently.
+                return $filename;
+            }
+todo esto se tiene que remplazar desde la 110 o algo parecido
+
+
+------------------------------------------------------------
+para darle funcionamiento a los componentes de taiwin se tiene que dar js y laravel tiene a su disposicion livewire y para ello se tiene que hacer :
+php artisan make:livewire name->nombre del componente que quieres crear
+
+esto te va a crear 2 carpetas uno en view y el otro en http que es donde se va a crear el componente
+
+---------------------------------------------------------------
+{{auth()->user()->profile_photo_url}} esta propiedoad te devuele la url de la imagen de tu perfil
+
+
+
+para que den las imanes se tiene que modificar :
+
+vendor\fakerphp\faker\src\Faker\Provider\Image.php ->  ir a esa tura
+public const BASE_URL = 'https://placehold.jp';  // cambie la URL -> cambiar la ruta existente por esta
+
